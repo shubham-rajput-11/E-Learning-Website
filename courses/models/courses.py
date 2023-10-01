@@ -1,7 +1,9 @@
 from django.db import models
 
 class Course(models.Model):
-    name = models.CharField(max_length=30, null=False)
+    name = models.CharField(max_length=50, null=False)
+    slug = models.CharField(max_length=50, null=False , unique=True)
+    # slug is used to navigate courses with names having urls' with same coursename 
     description = models.CharField(max_length=200, null=True)
     price = models.IntegerField(null=False)
     discount = models.IntegerField(null=False, default=0)

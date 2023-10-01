@@ -15,25 +15,25 @@
     <div class="col mx-auto">
       <div class="card mx-auto" style="width: 18rem">
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFhqnFxnwfOLO4g0a5PBU9w7rx61B3xe9Dmw&usqp=CAU"
-          class="card-img-top"
-          alt="..."
+        src="{{ course.thumbnail.url }}"
+         class="card-img-top"
+          alt="card image cap"
         />
         <div class="card-body">
           <h5 class="card-title">{{ course.name }}</h5>
-          <small>{{ course.thumbnail.url }}</small>
+          <!-- <small>{{ course.thumbnail.url }}</small> -->
           <p class="card-text m-0 p-0">
             save {{ course.discount }}%
             <br />
             <span class="price">
               price: <del> {{ course.price|rupee }}</del>
+              <!-- rupee is function called and course.price is paramter passed in that function -->
               <!-- del tag to cut middle line -->
               &nbsp;
 
               <span>
-                {% calc_sellprice course.price course.discount as value%}
-                {{value|rupee}}</span
-              >
+                {% calc_sellprice course.price course.discount as value %}
+                {{value|rupee}}</span>
             </span>
           </p>
         </div>
@@ -45,7 +45,7 @@
               <a href="#" class="btn btn-light btn-block">Enroll Now</a>
             </div>
             <div class="col">
-              <a href="#" class="btn btn-light btn-block">Show More</a>
+              <a href="/course/{{course.slug}}" class="btn btn-light btn-block">Show More</a>
             </div>
           </div>
         </div>
