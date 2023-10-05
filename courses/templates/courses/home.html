@@ -1,0 +1,72 @@
+{% extends './base.html' %}
+<!-- path is related to home.html so ./ is compulsory or alternate : courses/base.html -->
+<!--folder with name "courses is created in templates"  -->
+{% load course_custom_tags %} 
+{% block title %} Courses {% endblock %}
+
+<style>
+  .price {
+    font-size: 20px;
+  }
+</style>
+<div class="container-fluid">
+  <br>
+  
+  <div class="row">
+    {% block content %} 
+    {% for course in courses %}
+    <div class="col mx-auto">
+      <div class="card mx-auto" style="width: 18rem">
+        <img
+        src="{{ course.thumbnail.url }}"
+         class="card-img-top"
+          alt="card image cap"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ course.name }}</h5>
+          <!-- <small>{{ course.thumbnail.url }}</small> -->
+          <p class="card-text m-0 p-0">
+            save {{ course.discount }}%
+            <br />
+            <span class="price">
+              price: <del> {{ course.price|rupee }}</del>
+              <!-- rupee is function called and course.price is paramter passed in that function -->
+              <!-- del tag to cut middle line -->
+              &nbsp;
+
+              <span>
+                {% calc_sellprice course.price course.discount as value %}
+                {{value|rupee}}</span>
+            </span>
+          </p>
+        </div>
+
+        <div class="card-footer p-0">
+          <!--p-0 : padding zero  -->
+          {% is_enrolled request course as enrolled %}
+
+          <div class="row no-gutters">
+            {% if enrolled %}
+              <div class="col border-right">
+                <a href="/course/{{course.slug}}" class="btn btn-light btn-block">Go to Course</a>
+              </div>
+            {% else %}
+              <!-- no-gutters to remove negative(extra) margin or padding  -->
+              <div class="col border-right">
+                <a href="/check-out/{{course.slug}}" class="btn btn-light btn-block">Enroll Now</a>
+              </div>
+              <div class="col">
+                <a href="/course/{{course.slug}}" class="btn btn-light btn-block">Show More</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <h3></h3>
+      <!-- <h4>{{ item.price }}</h4>
+      <h4>{{ item.discount }}</h4> -->
+    </div>
+
+    {% endfor %} {% endblock %}
+  </div>
+</div>

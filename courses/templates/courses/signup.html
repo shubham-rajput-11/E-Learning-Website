@@ -1,0 +1,25 @@
+{% extends './base.html' %}
+<!-- path is related to home.html so ./ is compulsory or alternate : courses/base.html -->
+<!--folder with name "courses is created in templates"  -->
+{% load course_custom_tags %} 
+
+{% block title %} Signup {% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>Signup</h1>
+    <hr>
+
+    <div>
+        <form action="/signup" method="POST">
+            {% csrf_token %}
+            {{form.as_ul}}
+            <input type="submit" value="Register" />
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

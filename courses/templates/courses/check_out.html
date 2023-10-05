@@ -1,0 +1,102 @@
+{% extends './base.html' %}
+<!-- path is related to home.html so ./ is compulsory or alternate : courses/base.html -->
+<!--folder with name "courses is created in templates"  -->
+{% load course_custom_tags %} 
+
+{% block title %} checkout {% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <br>
+    <br> 
+
+    {% if order is not None %}
+        <p>{{ order }}</p>
+        <p>{{ payment }}</p>
+    {% endif %}
+
+    <div class="row" >
+        <div class="col mx-auto">
+            <div class="card ml-auto" style="width: 18rem">
+              <img
+              src="{{ course.thumbnail.url }}"
+               class="card-img-top"
+                alt="card image cap"
+              />
+              <div class="card-body">
+                <h5 class="card-title">{{ course.name }}</h5>
+                <!-- <small>{{ course.thumbnail.url }}</small> -->
+                <p class="card-text m-0 p-0">
+                  save {{ course.discount }}%
+                  <br />
+                  <span class="price">
+                    price: <del> {{ course.price|rupee }}</del>
+                    <!-- rupee is function called and course.price is paramter passed in that function -->
+                    <!-- del tag to cut middle line -->
+                    &nbsp;
+      
+                    <span>
+                      {% calc_sellprice course.price course.discount as value %}
+                      {{value|rupee}}</span>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <h3></h3>
+            <!-- <h4>{{ item.price }}</h4>
+            <h4>{{ item.discount }}</h4> -->
+        </div>
+
+        <div class="col">
+            <div>
+                <h3>{{ course.name }}</h3>
+                <hr>
+                <h3>Pyable Amount: 
+                    {% calc_sellprice course.price course.discount as value %}
+                    <b>{{value|rupee}}</b>
+                </h3>
+
+                <a class="btn btn-light border" href="?action=create_payment">Continute to Payment</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% if order is not None %}
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+        var options = {
+            "key": "rzp_test_klIipMKctIDjai", // Enter the Key ID generated from the Dashboard
+            "currency": "INR",
+            "name": "LearningHub",
+            "description": "Pyment for {{ course.name }}",
+            "image": "data:image/png;base64,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",
+            "order_id": "{{ order.id }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "callback_url": "http://localhost:8000/verify_payment/",
+            "prefill": {
+                "name": "{{ user.first_name }} {{ user.last_name }}",
+                "email": "{{ user.email }}",
+                "contact": ""
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    </script>
+{% endif %}
+
+{% if error is not None %}
+    <script>
+        window.onload = () =>{
+            alert("{{ error }}")
+        }
+    </script>
+{% endif %}
+
+{% endblock %}
