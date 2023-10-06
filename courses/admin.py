@@ -23,6 +23,15 @@ class VideoAdmin(admin.StackedInline):
 # ModelAdmin is used to inline models 
 class CourseAdmin(admin.ModelAdmin): 
     inlines = [TagAdmin, LearningAdmin, PrerequisiteAdmin, VideoAdmin]
+    list_display=['name','price']
+
+    
+
+
+class PaymentAdmin(admin.ModelAdmin):
+    model = Payment
+    list_display = ['user','course','status']
+
 
 admin.site.register(Course, CourseAdmin) 
 # admin.site.register(Tag)
