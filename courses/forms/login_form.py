@@ -17,8 +17,10 @@ class LoginForm(AuthenticationForm):
             result = authenticate(username = user.username, password = password)
 
             if(result is not None):
-                login(self.request,result)
+                # login(self.request,result)
+                # self.request shouldnt be None
                 return result
+            # result can be accessed from loginform.clean()
             else:
                 raise ValidationError('Email or password is invalid!')
 

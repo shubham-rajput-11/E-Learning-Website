@@ -9,3 +9,16 @@
   }
 
 
+.display-5{
+  font-size: 35px;
+}
+
+.display-6{
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.active-video{
+  background-color: rgb(78, 79, 80);
+  color: antiquewhite;
+}
