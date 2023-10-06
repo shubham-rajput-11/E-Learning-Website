@@ -1,8 +1,7 @@
 {% extends './base.html' %}
 <!-- path is related to home.html so ./ is compulsory or alternate : courses/base.html -->
 <!--folder with name "courses is created in templates"  -->
-{% load course_custom_tags %} 
-{% block title %} Courses {% endblock %}
+{% load course_custom_tags %} {% block title %} Courses {% endblock %}
 
 <style>
   .price {
@@ -10,20 +9,16 @@
   }
 </style>
 <div class="container-fluid">
-  <br>
-  
+  <br />
+
   <div class="row">
-    {% block content %} 
+    {% block content %} {% for course in courses %}
 
-
-    {% for course in courses %}
-
-    
     <div class="col mx-auto">
       <div class="card mx-auto" style="width: 18rem">
         <img
-        src="{{ course.thumbnail.url }}"
-         class="card-img-top"
+          src="{{ course.thumbnail.url }}"
+          class="card-img-top"
           alt="card image cap"
         />
         <div class="card-body">
@@ -40,7 +35,8 @@
 
               <span>
                 {% calc_sellprice course.price course.discount as value %}
-                {{value|rupee}}</span>
+                {{value|rupee}}</span
+              >
             </span>
           </p>
         </div>
@@ -51,17 +47,25 @@
 
           <div class="row no-gutters">
             {% if enrolled %}
-              <div class="col border-right">
-                <a href="/course/{{course.slug}}" class="btn btn-light btn-block">Go to Course</a>
-              </div>
+            <div class="col border-right">
+              <a href="/course/{{course.slug}}" class="btn btn-light btn-block"
+                >Go to Course</a
+              >
+            </div>
             {% else %}
-              <!-- no-gutters to remove negative(extra) margin or padding  -->
-              <div class="col border-right">
-                <a href="/check-out/{{course.slug}}" class="btn btn-light btn-block">Enroll Now</a>
-              </div>
-              <div class="col">
-                <a href="/course/{{course.slug}}" class="btn btn-light btn-block">Show More</a>
-              </div>
+            <!-- no-gutters to remove negative(extra) margin or padding  -->
+            <div class="col border-right">
+              <a
+                href="/check-out/{{course.slug}}"
+                class="btn btn-light btn-block"
+                >Enroll Now</a
+              >
+            </div>
+            <div class="col">
+              <a href="/course/{{course.slug}}" class="btn btn-light btn-block"
+                >Show More</a
+              >
+            </div>
             {% endif %}
           </div>
         </div>
